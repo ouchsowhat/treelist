@@ -8,10 +8,10 @@ $(document).ready(function() {
 		var children = $(this).parent('li.parent_li').find(' > ul > li');
 		if (children.is(":visible")) {
 			children.hide('fast');
-			$(this).find(' > i').addClass('glyphicon-minus').removeClass('glyphicon-plus');
+			$(this).find(' > i').addClass('glyphicon-plus').removeClass('glyphicon-minus');
 		} else {
 			children.show('fast');
-			$(this).find(' > i').addClass('glyphicon-plus').removeClass('glyphicon-minus');
+			$(this).find(' > i').addClass('glyphicon-minus').removeClass('glyphicon-plus');
 		}
 		e.stopPropagation();
 	});
@@ -26,18 +26,18 @@ function traversalTree(jsontree, parent, offset, display) {
 		if (jsontree[item].nodes.length > 0) {
 			//创建一个子节点li
 			var li = $("<li style='display:" + display + "'></li>");
-			var html = "<span class='list-group-item'><i class='glyphicon glyphicon-plus' style='padding-left:" + offset + "px'>" + jsontree[item].text + "</span>"
+			var html = "<span class='list-group-item'><i class='glyphicon glyphicon-plus' style='padding-left:" + offset + "px;margin-right: 10px;color: #666;font-size: 12px'></i>" + jsontree[item].text + "</span>"
 				//将li的文本设置好，并马上添加一个空白的ul子节点，并且将这个li添加到父亲节点中
 			$(li).append(html).append("<ul></ul>").appendTo(parent);
 			//将空白的ul作为下一个递归遍历的父亲节点传入
 			traversalTree(jsontree[item].nodes, $(li).children().eq(1), paddingleft, "none");
 		}
 		//如果该节点没有子节点，则直接将该节点li以及文本创建好直接添加到父亲节点中
-		else {
+		else if (jsontree[item].nodes.length == 0) {
 			var li = $("<li style='display:" + display + "'></li>");
 			var html = "<span class='list-group-item'>" + "<input type='checkbox' onclick='ischecked(this)' style='margin-left:" + offset + "px' value= '" + jsontree[item].layer + "' > " + "<a onclick='itemclicked(this)' href='#' table='" + jsontree[item].table + "'>" + jsontree[item].text + "</a></span>"
 			$(li).append(html).appendTo(parent);
-		}
+		} else {}
 	}
 }
 
